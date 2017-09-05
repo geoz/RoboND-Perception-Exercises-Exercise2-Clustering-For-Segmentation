@@ -76,9 +76,9 @@ def pcl_callback(pcl_msg):
     # as well as minimum and maximum cluster size (in points)
     # NOTE: These are poor choices of clustering parameters
     # Your task is to experiment and find values that work for segmenting objects.
-    ec.set_ClusterTolerance(0.001)
-    ec.set_MinClusterSize(10)
-    ec.set_MaxClusterSize(250)
+    ec.set_ClusterTolerance(0.01)
+    ec.set_MinClusterSize(100)
+    ec.set_MaxClusterSize(25000)
     # Search the k-d tree for clusters
     ec.set_SearchMethod(tree)
     # Extract indices for each of the discovered clusters
@@ -109,7 +109,7 @@ def pcl_callback(pcl_msg):
     ros_cluster_cloud = pcl_to_ros(cluster_cloud)
 
     # TODO: Publish ROS messages
-    pcl_objects_pub.publish(ros_cluster)
+    pcl_objects_pub.publish(ros_msg_objects)
     pcl_table_pub.publish(ros_msg_table)
     pcl_cluster_pub.publish(ros_cluster_cloud)
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     # TODO: Create Publishers
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
-    pcl_cluster_pub = rospy.Publisher("/pcl_cluster"), PointCloud2, queue_size=1)
+    pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
 
     # Initialize color_list
     get_color_list.color_list = []
